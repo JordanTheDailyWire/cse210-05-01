@@ -1,64 +1,51 @@
-from keyboard_service import KeyboardService
-from video_service import VideoService
-from character import Character
-from symbols import Symbols
-from time import sleep
-
+#from script import Script
 class Director():
-    #Keeps track of input, updates, and output and sends them to their needed locations
-    '''
-    self.update_score
-    self.get_input
-    self.
-    '''
-    def __init__(self):
-        self.score = 0
-        #self.get_input=(int('x'))
-        #self.output 
-
-    def get_input(self):
-        question = input('Experience the thrill having gems or rocks fall upon you! <i>Greed</i>\nmight seem easy, but even the best treasure-hunter can end up in the wrong place and \nget hit by rocks.\nThe rules are simple.\n The character can move\non the screen trying to dodge or hit the falling objects.\n*If your character(#) move connects with a gem(*) you get a +1 to your score.\n*If the character move connects with a rock you get a -1 to your score.\n\nDo you want to start playing? y/n: ')   
-        if question != "y":
-            exit()
+    """A person who directs the game. 
     
-    def falling_movement(self, symbols, vs):
-        # go through and adjust the y position of every item in the symbol list
-        for symbol in symbols.symbols:
-            if isinstance(symbol, Character):
-                continue
-            if symbol.y < 39:
-                symbol.y += 1
-            else:
-                symbol.y = 0
-        # This is tricky, we only update score when we update the players position because
-        # the score is stored in the character object.  Of course you can have a hit event
-        # when the object fall, so we follow up with a fake player movement with a 0 direction
-        # just to detect a collision and update the score
-        score = symbols.update_player_position(0)
-        if score:
-            # we got a score update, because of collision
-            vs.set_score(score)
+    The responsibility of a Director is to control the sequence of play.
 
-    def start_game(self):    
-        # Demonstrate functional video service
-        self.get_input()
-        vs=VideoService()
-        vs.open_window()
-        symbols = Symbols()
-        ks = KeyboardService()
-        totaltime = 0.0
-        frame_interval = 0.05
-        while vs.game_running():
-            vs.draw_grid(symbols)
-            xdirection = ks.get_direction()
-            if xdirection != 0:
-                score = symbols.update_player_position(xdirection)
-                if score:
-                    # we got a score update, because of collision
-                    vs.set_score(score)
-            sleep(frame_interval)
-            totaltime += frame_interval
-            if totaltime > 1.0:
-                self.falling_movement(symbols, vs)
-                totaltime = 0.0
-        vs.close_window()
+    Attributes:
+        _video_service (VideoService): For providing video output.
+    """
+    _video_service = None
+    player1_score = 0
+    player2_score = 0
+    #initiates the game and the first action taking place 
+    # makes sure all things are being added to the video_service too.
+    def __init__(self, video_service):
+        """Constructs a new Director using the specified video service.
+        
+        Args:
+            video_service (VideoService): An instance of VideoService.
+        """
+        self._video_service = video_service 
+
+    def start_game(self, players, script):
+        """Starts the game using the given cast and script. Runs the main game loop.
+
+        Args:
+            cast (Cast): The cast of actors.
+            script (Script): The script of actions.
+        """
+        self._video_service.open_window()
+        while self._video_service.is_window_open():
+            self._execute("input", players, script)
+            self._execute("update", players, script)
+            self._execute("output", players, script)
+        self._video_service.close_window()
+
+    def execute(self, execute_type, players, script):
+        """Calls execute for each players script.
+        
+        Args:
+            Players (player_1 or player_2): The action group name.
+            script (Script): The script off additions and text display
+            for the contestants progress or defeat.
+        """
+        score = script.get_scores()    
+        while score == players.player_1:
+            script.get_scores.execute(players, script)
+            if score == players.player_2:
+                script.get_scores.execute(players, script)
+
+
