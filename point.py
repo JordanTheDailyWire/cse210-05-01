@@ -1,5 +1,5 @@
-from contestants import contestants
-class Point(contestants):
+
+class Point():
     #detects the location of the head of the snake and adjusts accordingly
     """A distance from a relative origin (0, 0).
 
@@ -10,22 +10,18 @@ class Point(contestants):
         _x (integer): The horizontal distance from the origin.
         _y (integer): The vertical distance from the origin.
     """
-    
 
-
-    def init(self, x, y):
+    def __init__(self, x, y):
         """Constructs a new Point using the specified x and y values.
         
         Args:
             x (int): The specified x value.
             y (int): The specified y value.
         """
-        self._x = x, self_y =y
-        self.contest = contestants.execute   
-        self.oy = contestants.execute.get_y()
-        self.ox = contestants.execute.get_x()
+        self._x = x 
+        self._y = y
 
-    def add(self, other):
+    def add(self, contestant):
         """Gets a new point that is the sum of this and the given one.
 
         Args:
@@ -34,8 +30,8 @@ class Point(contestants):
         Returns:
             Point: A new Point that is the sum.
         """
-        x = self._x + contestants.execute.get_x()
-        y = self._y + contestants.execute.get_y()
+        x = self._x + contestant.execute.get_x()
+        y = self._y + contestant.execute.get_y()
         return Point(x, y)
 
     def equals(self, other):
