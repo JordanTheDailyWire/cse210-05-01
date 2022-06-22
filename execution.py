@@ -1,4 +1,4 @@
-class Executes:
+class Execution:
    
     def execute(self, players, script):
         pass
