@@ -8,6 +8,7 @@ FONT_SIZE = 15
 CAPTION = "Snake"
 font_size = 15
 snake_length = 8
-white = [255,255,255]
-red = [255,0,0]
-green = [0,255,0]
+WHITE = [255,255,255]
+RED = [255,0,0]
+GREEN = [0,255,0]
+

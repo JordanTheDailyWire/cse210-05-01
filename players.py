@@ -1,5 +1,5 @@
 from tkinter import constants
-from snake_group.constants import GREEN, RED, WHITE, MAX_X, MAX_Y
+from constants import GREEN, RED, WHITE, MAX_X, MAX_Y
 from point import Point
 
 class Players:
@@ -10,7 +10,7 @@ class Players:
         contestants = (self.player_1, self.player_2)
         self._text = ""
         self._font_size = 15
-        self._color = WHITE(255, 255, 255)
+        self._color = WHITE
         self._position = Point(0, 0)
         self._velocity = Point(0, 0)
         self.x = Point.get_x

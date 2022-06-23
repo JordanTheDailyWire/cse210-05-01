@@ -1,55 +1,46 @@
-import constants
 from players import Players
-from contestants import Contestants
-from direction import Direction
-from scores import Scores
-class Collision(Point):
-    def __init__(self):
-        """Constructs a new HandleCollisionsAction."""
-        self._is_game_over = False
-#add the fusin back
-    def execute(self, cast, script):
-        """Executes the handle collisions action.
-        Args:
-            cast (Cast): The cast of Actors in the game.
-            script (Script): The script of Actions in the game.
-        """
-        if not self._is_game_over:
-            self._handle_collision(Contestants)
-            self._handle_segment_collision(Contestants)
-            self._handle_game_over(Contestants)
-    def _handle_collision(self, cast):
-        """Updates the score nd moves the food if the snake collides with the food.
-        Args:
-            cast (Cast): The cast of Actors in the game.
-        """
-        #look at this it is the same collision_det
-        Scores = Players.get_move_next("scores")
-        snake = Players.get_move_next("")
-        head = snake.get_head()
-        points = Direction.get_points()
-        #add2 add when it moves     snake.grow_tail(points)
-           #add 2  score.add_points(points)
-    def _handle_segment_collision(self, cast):
-        """Sets the game over flag if the snake collides with one of its segments.
-        Args:
-            cast (Cast): The cast of Actors in the game.
-        """
-        snake = Players.get_move_next("snakes")
-        head = snake.get_segments()[0]
-        segments = snake.get_segments()[1:]
+from collision import Collision
+from snake import Snake
+import constants
+from point import Point
+class CollisionDetection(Collision):
+#Snake hits itself and the input is sent to video_service and closes_window
+#sends the larger score as winner to be displayed in video_service.
+      def _handle_collision(self, cast):
+        score = cast.get_move_next("scores1")
+        player1 = Players.get_move_next("player1")
+        player2 = Players.get_move_next("player2")
+        head = Snake.get_head()
+        if head.get_position().equals(player1.get_position()):
+            points = self.player1.get_points()
+            player1.grow_tail(points)
+            score.add_points(points)
+        score = cast.get_move_next("scores2")
+        player2 = cast.get_move_next("player2")
+        head = player2.get_head()
+        if head.get_position().equals(player2.get_position()):
+            points = player2.get_points()
+            player2.grow_tail(points)
+            score.add_points(points)
+      def _handle_segment_collision(self, cast):
+        player1 = cast.get_move_next("player1 ")
+        head = player1.get_segments()[0]
+        segments = player1.get_segments()[1:]
+        player2 = Players.get_move_next("player2 ")
+        head2 = player2.get_segments()[0]
+        segments2 = player2.get_segments()[1:]
         for segment in segments:
             if head.get_position().equals(segment.get_position()):
                 self._is_game_over = True
-    def _handle_game_over(self, cast):
-        """Shows the 'game over' message and turns the snake and food white if the game is over.
-        Args:
-            cast (Cast): The cast of Actors in the game.
-        """
+        for segment in segments2:
+            if head2.get_position().equals(segment.get_position()):
+                self._is_game_over = True
+      def _handle_game_over(self, cast):
         if self._is_game_over:
-            snake = Players.get_move_next("snakes")
-            segments = snake.get_segments()
-            food = cast.get_move_next("foods")
+            player1 = cast.get_move_next("player1")
+            segments = player1.get_segments()
+            player2 = cast.get_move_next("player2")
+            segments = player2.get_segments()
             x = int(constants.MAX_X / 2)
             y = int(constants.MAX_Y / 2)
             position = Point(x, y)
@@ -59,7 +50,3 @@ class Collision(Point):
             cast.add_player("messages", message)
             for segment in segments:
                 segment.set_color(constants.WHITE)
-            food.set_color(constants.WHITE)
-white_check_mark
-eyes
-raised_hands

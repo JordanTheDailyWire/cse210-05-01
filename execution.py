@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from keyboard_service import KeyboardService
 class Execution():
     #direction is used to apply a move for the player it returns the score so
@@ -22,3 +23,9 @@ class Execution():
             self.ey = hy + y
             self.new_execution == self.execution
             return (self.ex, self.ey)
+=======
+class Execution:
+   
+    def execute(self, players, script):
+        pass
+>>>>>>> 4ebe83cc2eb673b4447e6a516ed16583a266c749

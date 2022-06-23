@@ -1,14 +1,14 @@
 from point import Point
 #from direction import Direction
 #from execution import Execution
-#from keyboard_service import KeyboardService
+from keyboard_service import KeyboardService
 
-class contestants('''Execution, KeyboardService'''):
+class Contestants():
     def __init__(self):
         super().__init__()
         #Begins the instance of two players
         '''Attributes:'''
-        ks=self.Keyboard_service
+        ks=KeyboardService()
         direct=self.direction
         self.a = (-1,0)
         self.s = (0,-1)
@@ -23,34 +23,19 @@ class contestants('''Execution, KeyboardService'''):
         
 
     def execute(self,point):
-        if self.direct == self.a: 
-            self.execute == (-1,0) + point(self.x,self.y) 
-            return sum()
-
+        if self.direct == self.a:
+            self.x -= 1 
         elif self.direct == self.s:
-            self.execute == (0,-1) + point(self.x,self.y)
-            return sum()
-
+            self.y -= 1
         elif self.direct == self.d:
-            self.execute == (+1,0) + point(self.x,self.y)
-            return sum()
-
+            self.x += 1
         elif self.direct == self.w:
-            self.execute == (0,+1) + point(self.x,self.y)
-            return sum()
-
+            self.y += 1
         elif self.direct == self.k:
-            self.execute == (0,-1) + point(self.x,self.y)
-            return sum()
-
+            self.y -= 1
         elif self.direct == self.l:
-            self.execute == (+1,0) + point(self.x,self.y)
-            return sum()
-
+            self.x += 1
         elif self.direct == self.i:
-            self.execute == (0,+1) + point(self.x,self.y)
-            return sum()
-
+            self.y += 1
         elif self.direct == self.j:
-            self.execute == (-1,0) + point(self.x,self.y)
-            return sum()  
+            self.x -= 1  
