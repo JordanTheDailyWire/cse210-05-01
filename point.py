@@ -1,93 +1,79 @@
 
-class Point():
-    #detects the location of the head of the snake and adjusts accordingly
-    """A distance from a relative origin (0, 0).
+from point import Point
+import constants
+from players import Players
+from contestants import Contestants
+from direction import Direction
+from scores import Scores
+class Collision(Point):    
 
-    The responsibility of Point is to hold and provide information about itself. Point has a few 
-    convenience methods for adding, scaling, and comparing them.
+    def __init__(self):
+        """Constructs a new HandleCollisionsAction."""
+        self._is_game_over = False
+#add the fusin back
+    def execute(self, cast, script): 
+        """Executes the handle collisions action.
+        Args:
+            cast (Cast): The cast of Actors in the game.
+            script (Script): The script of Actions in the game.
+        """
+        if not self._is_game_over:
+            self._handle_collision(Contestants)
+            self._handle_segment_collision(Contestants)
+            self._handle_game_over(Contestants)
 
-    Attributes:
-        _x (integer): The horizontal distance from the origin.
-        _y (integer): The vertical distance from the origin.
-    """
-
-    def __init__(self, x, y):
-        """Constructs a new Point using the specified x and y values.
+    def _handle_collision(self, cast):
+        """Updates the score nd moves the food if the snake collides with the food.
         
         Args:
-            x (int): The specified x value.
-            y (int): The specified y value.
+            cast (Cast): The cast of Actors in the game.
         """
-        self._x = x 
-        self._y = y
-
-    def add(self, contestant):
-        """Gets a new point that is the sum of this and the given one.
-
-        Args:
-            other (Point): The Point to add.
-
-        Returns:
-            Point: A new Point that is the sum.
-        """
-        x = self._x + contestant.execute.get_x()
-        y = self._y + contestant.execute.get_y()
-        return Point(x, y)
-
-    def equals(self, other):
-        """Whether or not this Point is equal to the given one.
-
-        Args:
-            other (Point): The Point to compare.
-
-        Returns: 
-            boolean: True if both x and y are equal; false if otherwise.
-        """
-        return self._x == self.ox() and self._y == self.oy
-    
-    def get_x(self):
-        """Gets the horizontal distance.
+        #look at this it is the same collision_det
+        Scores = Players.get_move_next("scores")
         
-        Returns:
-            integer: The horizontal distance.
-        """
-        return self._x
+        snake = Players.get_move_next("")
+        head = snake.get_head()
 
-    def get_y(self):
-        """Gets the vertical distance.
         
-        Returns:
-            integer: The vertical distance.
-        """
-        return self._y
-
-    def reverse(self):
-        """Reverses the point by inverting both x and y values.
-
-        Returns:
-            Point: A new point that is reversed.
-        """
-        new_x = self._x * -1
-        new_y = self._y * -1
-        return Point(new_x, new_y)
-    
-    def scale(self, factor):
-        """
-        Scales the point by the provided factor.
-
-        Args:
-            factor (int): The amount to scale.
+        points = Direction.get_points()
+        #add2 add when it moves     snake.grow_tail(points)
+           #add 2  score.add_points(points)
             
-        Returns:
-            Point: A new Point that is scaled.
+    def _handle_segment_collision(self, cast):
+        """Sets the game over flag if the snake collides with one of its segments.
+        
+        Args:
+            cast (Cast): The cast of Actors in the game.
         """
-        return Point(self._x * factor, self._y * factor)
-    
-    def reverse(self):
-        """Reverses the point by inverting both x and y values.
-         Returns:
-            Point: A new point that is reversed.
+
+        snake = Players.get_move_next("snakes")
+        head = snake.get_segments()[0]
+        segments = snake.get_segments()[1:]
+        
+        for segment in segments:
+            if head.get_position().equals(segment.get_position()):
+                self._is_game_over = True
+        
+    def _handle_game_over(self, cast):
+        """Shows the 'game over' message and turns the snake and food white if the game is over.
+        
+        Args:
+            cast (Cast): The cast of Actors in the game.
         """
-        new_x = self._x * -1
-        new_y = self._y * -1
-        return Point(new_x, new_y)
+        if self._is_game_over:
+            snake = Players.get_move_next("snakes")
+            segments = snake.get_segments()
+            food = cast.get_move_next("foods")
+
+            x = int(constants.MAX_X / 2)
+            y = int(constants.MAX_Y / 2)
+            position = Point(x, y)
+
+            message = Players()
+            message.set_text("Game Over!")
+            message.set_position(position)
+            cast.add_player("messages", message)
+
+            for segment in segments:
+                segment.set_color(constants.WHITE)
+            food.set_color(constants.WHITE)
