@@ -1,9 +1,13 @@
 from tkinter import constants
 from constants import GREEN, RED, WHITE, MAX_X, MAX_Y
 from point import Point
+from scores import Scores
+from snake import Snake
 
 class Players:
-    def __init__(self):
+    score = Scores()
+    snake = None
+    def __init__(self, initial_segment_list):
         '''makes up the workings of the green and red 
         snakes upon the screen that the video_service 
         displays:'''
@@ -15,12 +19,13 @@ class Players:
         self._velocity = Point(0, 0)
         self.x = Point.get_x
         self.y = Point.get_y
-
+        self.snake = Snake(initial_segment_list)
 
     def player_1(self, contestants, point):
         while self._color == [RED]: 
             contestants.execute(self.get) + self._position(self.x,self.y)
             return (self.x,self.y)
+
     def player_2(self, contestants, point):
         while self._color == [GREEN]:
             contestants.execute + self._position
