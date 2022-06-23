@@ -29,9 +29,9 @@ class Director():
         """
         self._video_service.open_window()
         while self._video_service.is_window_open():
-            self._execute("input", players, script)
-            self._execute("update", players, script)
-            self._execute("output", players, script)
+            self.execute("input", players, script)
+            self.execute("update", players, script)
+            self.execute("output", players, script)
         self._video_service.close_window()
 
     def execute(self, execute_type, players, script):
@@ -42,10 +42,10 @@ class Director():
             script (Script): The script off additions and text display
             for the contestants progress or defeat.
         """
-        score = script.get_scores()    
-        while score == players.player_1:
-            script.get_scores.execute(players, script)
-            if score == players.player_2:
-                script.get_scores.execute(players, script)
+        #score = script.get_score()    
+        #while score == players.player_1:
+        #    script.get_scores.execute(players, script)
+        #    if score == players.player_2:
+        #       script.get_scores.execute(players, script)
 
 
