@@ -1,5 +1,5 @@
 from point import Point
-#from direction import Direction
+from direction import Direction
 #from execution import Execution
 from keyboard_service import KeyboardService
 
@@ -9,7 +9,7 @@ class Contestants():
         #Begins the instance of two players
         '''Attributes:'''
         ks=KeyboardService()
-        direct=self.direction
+        self.direct = Direction()
         self.a = (-1,0)
         self.s = (0,-1)
         self.d = (+1,0)
