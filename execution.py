@@ -1,31 +1,17 @@
-<<<<<<< HEAD
+
+from abc import ABCMeta, abstractmethod
 from keyboard_service import KeyboardService
-class Execution():
-    #direction is used to apply a move for the player it returns the score so
-    # that the script can be display:
-    def __init__(self) -> None:
-        super().__init__()
-        self.new_execute = (self.ex, self.ey)
-        self.ex = (hx + x)
-        self.ey = (hy + y)
-        self.location = self.get_head(hx = 0, hy =0)
-        self.coordinates = self.point(x = 0, y = 0)
-        
-    def execution(self, players, snake):
-        """Executes something that is important in the game. This method should be overriden by
-        derived classes.
-        Args:
-            self
-            cast (Cast): The cast of Actors in the game.
-            script (Script): The script of Actions in the game."""
-        for self.new_execution = self.location + self.coordinate
-            self.ex = hx + x
-            self.ey = hy + y
-            self.new_execution == self.execution
-            return (self.ex, self.ey)
-=======
-class Execution:
-   
-    def execute(self, players, script):
+
+class Execution(metaclass=ABCMeta):
+    # Abstract base class for multiple action types in the game.  
+    def __init__(self):
         pass
->>>>>>> 4ebe83cc2eb673b4447e6a516ed16583a266c749
+        
+    @abstractmethod
+    def execute(self):
+        # this is the abstract base class you will not implement 
+        # anything for execute here.  Any class that inherits from
+        # Execution will need to have an execute method, with details
+        # on what execute means and does for that inherited class.
+        pass
+
