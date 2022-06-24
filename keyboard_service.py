@@ -1,11 +1,16 @@
 import pyray
-from game.shared.point import Point
+from point import Point
+
+
 class KeyboardService:
-    """Detects player input.
+    """Detects player input. 
+    
     The responsibility of a KeyboardService is to indicate whether or not a key is up or down.
+
     Attributes:
         _keys (Dict[string, int]): The letter to key mapping.
     """
+
     def __init__(self):
         """Constructs a new KeyboardService."""
         self._keys = {}
@@ -22,30 +27,27 @@ class KeyboardService:
 
     def is_key_up(self, key):
         """Checks if the given key is currently up.
+        
         Args:
             key (string): The given key (w, a, s, d or i, j, k, l)
         """
         pyray_key = self._keys[key.lower()]
         return pyray.is_key_up(pyray_key)
 
+    def set_direction_for_contestants(self, contestants):
+        # TODO: detect the current keys being pressed and
+        # determine if they are any of the players movement keys
+        # if they are set the direction on all the players who 
+        # have pressed movement keys. 
+        pass
+
     def is_key_down(self, key):
         """Checks if the given key is currently down.
+        
         Args:
             key (string): The given key (w, a, s, d or i, j, k, l)
         """
         pyray_key = self._keys[key.lower()]
         return pyray.is_key_down(pyray_key)
-    def is_key_up(self, key):
-        """Checks if the given key is currently up.
-        Args:
-            key (string): The given key (w, a, s, d or i, j, k, l)
-        """
-        pyray_key = self._keys[key.lower()]
-        return pyray.is_key_up(pyray.key_left)
-    def is_key_down(self, key):
-        """Checks if the given key is currently down.
-        Args:
-            key (string): The given key (w, a, s, d or i, j, k, l)
-        """
-        pyray_key = self._keys[key.lower()]
-        return pyray.is_key_down(pyray.key_right)
+    
+    
