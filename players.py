@@ -1,3 +1,4 @@
+
 from tkinter import constants
 from constants import GREEN, RED, WHITE, MAX_X, MAX_Y
 from point import Point
@@ -11,26 +12,21 @@ class Players:
         '''makes up the workings of the green and red 
         snakes upon the screen that the video_service 
         displays:'''
-        contestants = (self.player_1, self.player_2)
-        self._text = ""
-        self._font_size = 15
-        self._color = WHITE
-        self._position = Point(0, 0)
-        self._velocity = Point(0, 0)
-        self.x = Point.get_x
-        self.y = Point.get_y
+        self._up = None
+        self._down = None
+        self._left = None
+        self._right = None
         self.snake = Snake(initial_segment_list)
 
-    def player_1(self, contestants, point):
-        while self._color == [RED]: 
-            contestants.execute(self.get) + self._position(self.x,self.y)
-            return (self.x,self.y)
+    def set_movement_keys(self, up, down, left, right):
+        self._up = up
+        self._down = down
+        self._right = right
+        self._left = left
 
-    def player_2(self, contestants, point):
-        while self._color == [GREEN]:
-            contestants.execute + self._position
-            return (self.x,self.y)
-    
+    def get_movement_keys(self):
+        return self._up, self._down, self._left, self._right
+
     def get_color(self):
         """Gets the actor's color as a tuple of three ints (r, g, b).
         
@@ -73,9 +69,10 @@ class Players:
             max_x (int): The maximum x value.
             max_y (int): The maximum y value.
         """
-        x = (self._position.get_x() + self._velocity.get_x()) % constants.MAX_X
-        y = (self._position.get_y() + self._velocity.get_y()) % constants.MAX_Y
-        self._position = Point(x, y)
+        # Move all your snake segments
+        # x = (self..get_x() + self._velocity.get_x()) % constants.MAX_X
+        # y = (self._position.get_y() + self._velocity.get_y()) % constants.MAX_Y
+        # self._position = Point(x, y)
 
     def set_color(self, color):
         """Updates the color to the given one.
