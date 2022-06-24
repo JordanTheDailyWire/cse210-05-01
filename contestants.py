@@ -1,13 +1,9 @@
-from point import Point
-from direction import Direction
-#from execution import Execution
-from keyboard_service import KeyboardService
-
 class Contestants():
-    def __init__(self):
-        super().__init__()
+    _player_list = []
+    def __init__(self, player_list):
+        self._player_list = player_list
         #Begins the instance of two players
-        '''Attributes:'''
+        '''Attributes:
         ks=KeyboardService()
         self.direct = Direction()
         self.a = (-1,0)
@@ -20,7 +16,9 @@ class Contestants():
         self.i = (0,+1)
         self.x = Point.get_x()
         self.y = Point.get_y()
-        
+        '''
+    def get_players(self):
+        return self._player_list
 
     def execute(self,point):
         if self.direct == self.a:
