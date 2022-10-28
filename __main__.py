@@ -3,12 +3,11 @@ from script import Script
 from scores import Scores
 from snake import Snake
 from collision import Collision
-from collision_detector import CollisionDetection
+from collision import CollisionDetection
 from draw_players_action import DrawPlayersAction
 from director import Director
 from direction import Direction
 from keyboard_service import KeyboardService
-from script import Script
 from constants import RED, GREEN
 from video_service import VideoService
 from execution import Execution
